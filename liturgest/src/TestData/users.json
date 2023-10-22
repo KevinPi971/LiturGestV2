@@ -1,0 +1,20 @@
+[
+    {
+        "name":"nameUser1",
+        "firstname":"fisrtnameUser1",
+        "phoneNumber":"0123456789",
+        "mail":"user1@mail.com"
+    },
+    {
+        "name":"nameUser2",
+        "firstname":"fisrtnameUser2",
+        "phoneNumber":"0987654321",
+        "mail":"user2@mail.com"
+    },
+    {
+        "name":"nameUser3",
+        "firstname":"fisrtnameUser3",
+        "phoneNumber":"0456789123",
+        "mail":"user3@mail.com"
+    }
+]

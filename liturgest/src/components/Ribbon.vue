@@ -9,6 +9,7 @@
         >
             <router-link to="/"><el-menu-item index="home">Accueil</el-menu-item></router-link>
             <router-link to="/planning"><el-menu-item index="planning">Planning</el-menu-item></router-link>
+            <router-link to="/users"><el-menu-item index="users">Liste des utilisateurs</el-menu-item></router-link>
             <router-link to="/profile"><el-menu-item index="profile">Profil</el-menu-item></router-link>
         </el-menu>
     </div>
