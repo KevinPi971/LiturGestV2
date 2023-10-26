@@ -1,11 +1,22 @@
 <template>
-    <div>Planning</div>
+    <div>
+      
+    </div>
   </template>
   
   <script>
   export default {
-  name: "PlanningView"
-  
+    name: "PlanningView",
+    data(){
+      return {
+        dateFocused: new Date()
+      }
+    },
+    methods:{
+      changeDate(){
+        console.log(this.dateFocused)
+      }
+    }
   }
   </script>
   
