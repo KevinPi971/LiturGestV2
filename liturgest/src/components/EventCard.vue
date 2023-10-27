@@ -29,5 +29,7 @@ export default {
 </script>
 
 <style>
-
+.box-card{
+    
+}
 </style>

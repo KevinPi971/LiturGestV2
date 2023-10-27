@@ -2,7 +2,7 @@
     <el-card class="box-card">
         <template #header>
             <div class="card-header">
-                <span>{{ dateInMonth }}</span>
+                <span>{{ date.getDate() }}</span>
             </div>
         </template>
         <div v-for="event in events" :key="event" class="text item">
@@ -15,25 +15,30 @@
 
 <script>
 import EventCard from "./EventCard.vue"
-import Event from "../assets/Event"
+//import Event from "../assets/Event"
 export default {
     name:"CalenderCard",
     components:{
         EventCard
     },
     props:{
-        dateInMonth : {
-            type:Number
+        date:{
+            type:Date
         }
     },
     data(){
         return {
-            events : []
+            events : [],
         }
+    },
+    beforeMount(){
+    },
+    methods : {
     }
 }
 </script>
 
 <style>
-
+.box-card{
+}
 </style>

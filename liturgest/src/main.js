@@ -11,6 +11,10 @@ import Planning from "./view/PlanningView.vue"
 import Users from "./view/UsersView.vue"
 import Profile from "./view/ProfileView.vue"
 
+import db from "./assets/db"
+
+db;
+
 
 const router = createRouter({
     history: createWebHistory (),

@@ -1,4 +1,4 @@
-class Event {
+export default class Event {
     #id = null;
     title = "";
     typeOfEvent = null;
@@ -16,18 +16,18 @@ class Event {
         this.typeOfEvent = typeOfEvent;
         this.ddeb = ddeb;
         this.dfin = dfin;
-        init();
+        this.init();
     }
 
     init(){
-        this.#setId();
-        this.#setCreator();
+        this.setId();
+        this.setCreator();
     }
 
     /**
      * Cherche un id disponible et le renseigne
      */
-    #setId(){
+    setId(){
         //this.id=this.getNewEventId;
     }
 
@@ -38,7 +38,7 @@ class Event {
     /**
      * Récupère le user courant et le désign en tant que créateur
      */
-    #setCreator(){
+    setCreator(){
         //this.creator=this.getCurrentUser();
     }
 
