@@ -21,6 +21,13 @@
         <el-button class="monthYear" @click="changeMonthOrYear('nextYear')">Suivant</el-button>
       </div>
       <div id="PlanningGrid">
+        <el-text
+          class="DayOfWeekTitle"
+          v-for="(dow, index) in daysOfWeek"
+          :key="index"
+        >
+          {{ dow }}
+        </el-text>
         <div 
           class="PlanningRow"
           v-for="w in nbWeek"
@@ -33,7 +40,8 @@
           >
             <CalenderCard
               class="card"
-              :date="getCalenderDay(w, d).date"
+              :key="getCalenderDay(w, d) + getCalenderDay(w, d).events"
+              :cal-day="getCalenderDay(w, d)"
             />
           </div>
         </div>
@@ -44,7 +52,9 @@
   <script>
   import CalenderCard from "../components/CalenderCard.vue"
   import CalenderDay from "@/assets/CalenderDay";
-  import {getUserByMail} from "../assets/db"
+  import Event from "../assets/Event"
+  import { getResultForRequest } from "../assets/db"
+  import { formatDateForSQL } from "../assets/fonction"
   export default {
     name: "PlanningView",
     components:{
@@ -61,7 +71,8 @@
         calenderDays: [],
         nbWeek:4,
         monthsOfYear:["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"],
-        daysOfWeek:["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"]
+        daysOfWeek:["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+        listEvt: []
       }
     },
     async beforeMount(){
@@ -69,8 +80,7 @@
       this.year = this.today.getFullYear();
 
       this.setDayOnCardDay();
-
-      console.log(await getUserByMail("kevin.pi@mail.com"));
+      await this.setEvtOnSchedule();
     },
     methods:{
       changeMonthOrYear(mode){
@@ -129,7 +139,8 @@
                 lastDayOfLastMonth.getMonth(),
                 lastDayOfLastMonth.getDate() + i - firstDay + 1
               ),
-              false
+              false,
+              []
             )
           );
         }
@@ -143,7 +154,8 @@
                 this.month,
                 i - firstDay + 1
               ),
-              false
+              true,
+              []
             )
           );
         }
@@ -156,13 +168,14 @@
                 firstDayOfNextMonth.getFullYear(),
                 firstDayOfNextMonth.getMonth(),
                 i - lastDay - firstDay + 1
-              )
+              ),
+              false,
+              []
             )
           );
         }
 
         const nbWeek = (firstDay + lastDay) / 7;
-        //console.log(nbWeek);
         this.nbWeek = nbWeek <= 4 ? 4 : nbWeek <= 5 ? 5 : 6;
       },
       getCalenderDay(week, dayOfWeek){
@@ -172,6 +185,43 @@
       updateMonth(e){
         this.month = e;
         this.setDayOnCardDay();
+      },
+      async setEvtOnSchedule(){
+        this.listEvt = [];
+        const listShortEvt = await this.getEvtsByDates(this.firstDateOfSchedule, this.lastDateOfSchedule)
+        
+        for(let cd of this.calenderDays){
+          const listEvents = [];
+          for(let lse of listShortEvt){
+            //console.log(lse);
+            const lseDdeb = new Date(lse.ddeb);
+            const lseDfin = new Date(lse.dfin);
+            
+            if(this.isDateIn(cd.date, lseDdeb) || this.isDateIn(cd.date, lseDfin)){
+              listEvents.push(new Event(lse.id, lse.typeevt, lse.typeevttitle, lse.color, lse.ddeb, lse.dfin));
+            }
+          }
+          cd.events = listEvents;
+          //console.log(cd);
+        }
+        console.log(this.calenderDays);
+      },
+      async getEvtsByDates(ddeb, dfin){
+        const request = "SELECT * FROM SHORTEVT WHERE DDEB > '" + formatDateForSQL(ddeb) + "' AND DFIN <= '" + formatDateForSQL(dfin) + "' ORDER BY DDEB";
+        return await getResultForRequest(request);
+      },
+      getEvtOfDate(date){
+        const list = [];
+        for(let le of this.listEvts){
+          if(le.ddeb.slice(0, 10) ==  formatDateForSQL(date)){
+            list.push(le);
+          }
+        }
+        return list;
+      },
+      isDateIn(dRef, d){
+        const dRef2 = new Date(dRef.getFullYear(), dRef.getMonth(), dRef.getDate() + 1);
+        return dRef <= d && d <= dRef2;
       }
     }
   }
@@ -183,6 +233,11 @@
   }
   .PlanningCell{
     display: inline;
+  }
+  .DayOfWeekTitle{
+    display: inline-block;
+    width: 150px;
+    margin-left: 10px;
   }
   .card{
     display:inline-block;

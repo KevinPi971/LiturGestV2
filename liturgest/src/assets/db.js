@@ -831,7 +831,20 @@ async function init(){
             ],
             cols : ["participEvt.id", "participEvt.user as userid", "user.nom", "user.prenom", "fullevt.id as evtid", "typeevt", "ddeb", "dfin", "lieu", "typeevttitle", "color", "lieuid", "lieutitle", "adresse", "participEvt.fonction", "fonction.title as fonctiontitle", "comm"],
             conditions : []
-        }
+        },
+        {
+            nomView : "shortEvt",
+            table : "evt",
+            tables : [
+                {
+                    table : "typeevt",
+                    join : "INNER",
+                    link : "evt.typeevt = typeevt.id"
+                }
+            ],
+            cols : ["evt.id", "typeevt", "ddeb", "dfin", "typeevt.title as typeevttitle", "color"],
+            conditions : []
+        },
     ];
     console.log("Delete");
     try{

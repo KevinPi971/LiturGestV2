@@ -1,7 +1,9 @@
 export default class CalenderDay{
-    constructor(id, date, isActive){
+    events = [];
+    constructor(id, date, isActive, events){
         this.id = id;
         this.date = date;
         this.isActive = isActive;
+        this.events = events;
     }
 }

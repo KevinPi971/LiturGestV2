@@ -1,27 +1,26 @@
 <template>
-    <el-card class="box-card">
-        <template #header>
-            <div class="card-header">
-                <span>{{ event.title }}</span>
-            </div>
-        </template>
-    </el-card>
+    <el-button :color="event.color">
+        {{ event.titleTypeEvt }}
+    </el-button>
 </template>
 
 <script>
-import Event from "../assets/Event"
+//import Event from "../assets/Event"
 export default {
     name:"EventCard",
     components:{
     },
     props:{
         event:{
-            type: Event
+            type: Object
         }
     },
     data(){
         return {
         }
+    },
+    beforeMount(){
+        console.log(this.event);
     },
     methods:{
     }
@@ -29,7 +28,4 @@ export default {
 </script>
 
 <style>
-.box-card{
-    
-}
 </style>

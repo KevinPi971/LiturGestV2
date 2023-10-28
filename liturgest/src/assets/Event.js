@@ -1,48 +1,17 @@
 export default class Event {
-    #id = null;
-    title = "";
-    typeOfEvent = null;
-    ddeb = null;
-    dfin = null;
-    #creator = null;
+    lieu
+    creator = null;
     responsible = null;
     participants = [];
     parts = []; // liste d'activités
     isReccurent = false;
     
-
-    constructor(title, typeOfEvent, ddeb, dfin){
-        this.title = title;
-        this.typeOfEvent = typeOfEvent;
+    constructor(id, typeEvt, titleTypeEvt, color, ddeb, dfin){
+        this.id = id;
+        this.typeEvt = typeEvt;
         this.ddeb = ddeb;
         this.dfin = dfin;
-        this.init();
-    }
-
-    init(){
-        this.setId();
-        this.setCreator();
-    }
-
-    /**
-     * Cherche un id disponible et le renseigne
-     */
-    setId(){
-        //this.id=this.getNewEventId;
-    }
-
-    get id(){
-        return this.#id;
-    }
-
-    /**
-     * Récupère le user courant et le désign en tant que créateur
-     */
-    setCreator(){
-        //this.creator=this.getCurrentUser();
-    }
-
-    get creator(){
-        return this.#creator;
+        this.titleTypeEvt = titleTypeEvt;
+        this.color = color;
     }
 }

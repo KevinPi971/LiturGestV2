@@ -1,10 +1,11 @@
 <template>
-    <div id="ribbonContainer">
+    <div class="ribbonContainer">
         <h1 id="appTitle">LiturGest</h1>
         <el-menu
             :default-active="activeIndex"
             class="el-menu-demo"
             mode="horizontal"
+            background-color="deepskyblue"
             @select="handleSelect"
         >
             <router-link to="/"><el-menu-item index="home">Accueil</el-menu-item></router-link>
@@ -43,5 +44,10 @@ export default {
 <style>
 #appTitle{
     text-align: left;
+    margin: 0;
+}
+.ribbonContainer{
+    background-color: deepskyblue;
+    margin: 0px;
 }
 </style>
